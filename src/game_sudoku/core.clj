@@ -15,22 +15,30 @@
 (defn -main
   "I don't do a whole lot ... yet."
   [& args]
-  (println (deref sudoku-grid)))
+  (println (@sudoku-grid)))
 
+(defn check-square [grid x y testval] ;; CHECKS A SINGLE SQUARE
+  ;; NEED TO GET SPECFIIC COORDINATE, GET THE VALUE AT GIVEN COORDINATE, GET TRUE OR FALSE IF IT PASSES THE TESTS
+  ;; TRANSFORM THIS INTO A VECTOR ADDED TO A MORE DETAILED GRID THAT CALCULATES PROBABILITY
+)
+
+(defn check-grid [grid] ;; CHECKS THE WHOLE GRID
+  ;; NEEDS A "CYCLE" AND/OR NEXT -> SHOULD LATER FIND THE SQUARE THAT MUST CERTAINLY BE A PARTICULAR NUMBER
+  ;; REPEAT THIS PROCESS
+)  
+  
 (defn horizontal? [grid testval y]]
   (contains? (nth (partition 9 grid) y) testval))
 
 (defn vertical? [grid testval x]]
   (contains? (nth (apply mapv vector (partition 9 grid)) x) testval))
   
-(defn square? [grid testval sq-coordinate]
-  (->> grid
-      (partition 9)
-      (map #(partition 3 %)))
-      (apply mapv vector)
-      (flatten)
-      (partition 9))
-
-
-
-  
+(defn square? [grid testval sq-coordinate] 
+    (as-> grid $
+      (partition 9 $)
+      (map #(partition 3 %) $)
+      (apply mapv vector $)
+      (flatten $)
+      (partition 9 $) 
+      (nth $ sq-coordinate)
+      (contains? $ testval)))
